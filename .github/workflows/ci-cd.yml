@@ -29,9 +29,23 @@ jobs:
       run: |
         pytest test_app.py --doctest-modules
 
+  security:
+    name: Security Scan (Snyk)
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      continue-on-error: false # Esto bloquea el pipeline si encuentra vulnerabilidades críticas
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   build:
     name: Build Docker Image
-    needs: test
+    needs: security
     runs-on: ubuntu-latest
 
     steps:
