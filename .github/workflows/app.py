@@ -16,3 +16,7 @@ def health():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+    
+# Simulación de vulnerabilidad
+AWS_SECRET_KEY = "contrasenia_hardcodeada_falsa_12345"
+    
